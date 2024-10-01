@@ -3,13 +3,15 @@ package com.example.repository;
 import com.example.entity.BookDTO;
 import org.apache.ibatis.session.SqlSession;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BookDAOMyBatis { // 리팩토링 => 중앙집중식 관리, 코드의 간결성, 자원의관리의 효율성
 
         public List<BookDTO> bookList(){
             try(SqlSession session=MyBatisUtil.openSession()){ // close()
-                 return session.selectList("com.example.repository.BookDAO.bookList");
+                 return session.selectList("com.example.repository.BookDAOMyBatis.bookList");
             }
         // try 블록이 종료되면 session은 자동으로 close 됩니다.
        }
@@ -37,9 +39,12 @@ public class BookDAOMyBatis { // 리팩토링 => 중앙집중식 관리, 코드�
            }
        }
 
-    public int bookUpdate(BookDTO dto) {
+    public int bookUpdate(Long num, BookDTO dto) {
         try(SqlSession session=MyBatisUtil.openSession()){
-            int cnt=session.insert("bookUpdate", dto);
+            Map<String, Object> maps=new HashMap<>();
+            maps.put("num" , num);
+            maps.put("dto", dto);
+            int cnt=session.insert("bookUpdate", maps);
             session.commit(); // 완료
             return cnt;
         }

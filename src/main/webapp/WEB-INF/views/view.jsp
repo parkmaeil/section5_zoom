@@ -3,6 +3,7 @@ pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="cpath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,7 +63,7 @@ pageEncoding="UTF-8"%>
               switch(e.target.classList[2]){
                   case "btn-primary" :
                        console.log("목록버튼클릭");
-                       form.action="/MF01/list"
+                       form.action="${cpath}/list"
                        if(inputNum){
                            inputNum.remove();
                        }
@@ -70,12 +71,12 @@ pageEncoding="UTF-8"%>
                        break;
                   case "btn-success" :
                       console.log("수정버튼클릭");
-                      form.action="/MF01/updateGet"
+                      form.action="${cpath}/updateGet"
                       form.method="POST";
                       break;
                   case "btn-warning" :
                        console.log("삭제버튼클릭");
-                       form.action="/MF01/delete"
+                       form.action="${cpath}/delete"
                        form.method="POST";
                        break;
               }

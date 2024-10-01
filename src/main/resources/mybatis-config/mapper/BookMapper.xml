@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.repository.BookDAO">
+<mapper namespace="com.example.repository.BookDAOMyBatis">
 
      <select id="bookList" resultType="com.example.entity.BookDTO">
          select * from book order by title asc
@@ -21,12 +21,12 @@
         select * from book where num=#{num}
     </select>
 
-    <update id="bookUpdate" parameterType="com.example.entity.BookDTO">
+    <update id="bookUpdate" parameterType="java.util.Map">
         update book set
-        title=#{title},
-        price=#{price},
-        author=#{author},
-        page=#{page}
+        title=#{dto.title},
+        price=#{dto.price},
+        author=#{dto.author},
+        page=#{dto.page}
         where num=#{num}
     </update>
 
