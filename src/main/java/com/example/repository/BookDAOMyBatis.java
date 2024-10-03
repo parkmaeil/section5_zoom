@@ -1,6 +1,7 @@
 package com.example.repository;
 
 import com.example.entity.BookDTO;
+import com.example.entity.ReviewDTO;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.HashMap;
@@ -9,9 +10,9 @@ import java.util.Map;
 
 public class BookDAOMyBatis { // 리팩토링 => 중앙집중식 관리, 코드의 간결성, 자원의관리의 효율성
 
-        public List<BookDTO> bookList(){
+        public List<BookDTO> bookList(String key){
             try(SqlSession session=MyBatisUtil.openSession()){ // close()
-                 return session.selectList("com.example.repository.BookDAOMyBatis.bookList");
+                 return session.selectList("bookList", key);
             }
         // try 블록이 종료되면 session은 자동으로 close 됩니다.
        }
@@ -49,4 +50,28 @@ public class BookDAOMyBatis { // 리팩토링 => 중앙집중식 관리, 코드�
             return cnt;
         }
     }
+    public List<BookDTO> bookListSearch(String keyword) {
+        try(SqlSession session=MyBatisUtil.openSession()){
+                return  session.selectList("bookListSearch", keyword);
+        }
+      }
+
+    public void reviewAdd(ReviewDTO dto) {
+        try(SqlSession session=MyBatisUtil.openSession()){
+           int cnt=session.insert("reviewAdd", dto);
+            session.commit(); // 완료
+        }
+    }
+
+    public List<ReviewDTO> getByNumReviews(int num) {
+        try(SqlSession session=MyBatisUtil.openSession()){
+            return session.selectList("getByNumReviews", num);
+        }
+      }
+
+      public Double getAvgRating(int num){
+          try(SqlSession session=MyBatisUtil.openSession()){
+              return session.selectOne("getAvgRating", num); // 3.33333
+          }
+      }
 }

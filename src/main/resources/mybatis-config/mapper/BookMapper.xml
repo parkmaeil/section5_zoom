@@ -5,7 +5,7 @@
 <mapper namespace="com.example.repository.BookDAOMyBatis">
 
      <select id="bookList" resultType="com.example.entity.BookDTO">
-         select * from book order by title asc
+         select * from book order by  ${key}  desc
      </select>
 
     <delete id="bookDelete">
@@ -30,4 +30,25 @@
         where num=#{num}
     </update>
 
+    <select id="bookListSearch" resultType="com.example.entity.BookDTO">
+          select * from book where
+          title like CONCAT('%', #{keyword},'%')
+          or
+          author like CONCAT('%', #{keyword},'%')
+    </select>
+
+    <insert id="reviewAdd" parameterType="com.example.entity.ReviewDTO">
+         insert into review(book_num, content, rating)
+         values(#{book_num},#{content},#{rating})
+    </insert>
+
+    <select id="getByNumReviews" resultType="com.example.entity.ReviewDTO">
+        select * from review where book_num=#{num}
+        order by created_at desc
+    </select>
+
+    <select id="getAvgRating"  resultType="Double">
+           select avg(rating) from review
+           where book_num=#{num}
+    </select>
 </mapper>

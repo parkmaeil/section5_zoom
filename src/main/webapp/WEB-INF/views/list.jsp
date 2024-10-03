@@ -28,7 +28,22 @@ pageEncoding="UTF-8"%>
     <div class="container">
       <h2>Web MVC Framework Advanced</h2>
       <div class="card">
-        <div class="card-header">Book List</div>
+        <div class="card-header">Book List
+        <!-- 여기에 정렬 메뉴 작성-->
+                                      <div class="dropdown float-right">
+                                            <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" id="sortMenuButton"
+                                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                정렬
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="sortMenuButton">
+                                                <a class="dropdown-item" href="?sort=num">번호</a>
+                                                <a class="dropdown-item" href="?sort=title">제목</a>
+                                                <a class="dropdown-item" href="?sort=price">가격</a>
+                                                <a class="dropdown-item" href="?sort=author">저자</a>
+                                                <a class="dropdown-item" href="?sort=page">페이지수</a>
+                                            </div>
+                                        </div>
+        </div>
         <div class="card-body">
           <table class="table table-bordered table-hover">
               <thead>
@@ -54,6 +69,13 @@ pageEncoding="UTF-8"%>
               </c:forEach>
               </tbody>
           </table>
+          <!-- 검색 폼 추가-->
+                     <div class="d-flex justify-content-center">
+                          <form class="form-inline" action="${cpath}/slist" method="post">
+                              <input class="form-control mr-sm-2" type="search" placeholder="제목 또는 저자 검색" aria-label="Search" name="keyword">
+                              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
+                          </form>
+                      </div>
           <button class="btn btn-sm btn-primary"  onclick="goRegister()">등록하기</button>
         </div>
         <div class="card-footer">인프런_마프 1탄_박매일</div>

@@ -13,20 +13,24 @@ import java.io.IOException;
 import java.util.List;
 
 
-@WebServlet("/list")
-public class BookListController extends HttpServlet { // POJO
+@WebServlet("/slist")
+public class BookSearchListController extends HttpServlet { // POJO
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp)
                                                            throws ServletException, IOException {
+        req.setCharacterEncoding("utf-8");
         //BookDAO dao=new BookDAO();
         //Model과연동하는 부분
         BookDAOMyBatis dao=new BookDAOMyBatis();
-        String key="num";
-        if(req.getParameter("sort") !=null){
-             key=req.getParameter("sort");
+        String keyword=null;
+        List<BookDTO> list=null;
+        if(req.getParameter("keyword") !=null){
+            keyword=req.getParameter("keyword");
+            list=dao.bookListSearch(keyword); // 제목, 저자
+        }else {
+            list = dao.bookList("num");
         }
-        List<BookDTO> list=dao.bookList(key);
        // 객체 바인딩 기술
         req.setAttribute("list", list); // ${list}
 
